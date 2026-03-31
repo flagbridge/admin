@@ -1,0 +1,106 @@
+{
+	"common": {
+		"signIn": "Entrar",
+		"signOut": "Sair",
+		"create": "Criar",
+		"save": "Salvar",
+		"cancel": "Cancelar",
+		"delete": "Excluir",
+		"loading": "Carregando...",
+		"error": "Algo deu errado",
+		"copy": "Copiar",
+		"copied": "Copiado!"
+	},
+	"nav": {
+		"dashboard": "Painel",
+		"apiKeys": "Chaves de API",
+		"projects": "Projetos"
+	},
+	"login": {
+		"title": "Admin",
+		"email": "E-mail",
+		"password": "Senha",
+		"errorInvalid": "E-mail ou senha inválidos",
+		"errorGeneric": "Falha ao entrar. Tente novamente."
+	},
+	"dashboard": {
+		"title": "Painel",
+		"createProject": "Criar Projeto",
+		"emptyTitle": "Nenhum projeto ainda",
+		"emptyDescription": "Crie seu primeiro projeto para começar.",
+		"flagCount": "{count, plural, =0 {Nenhuma flag} one {# flag} other {# flags}}",
+		"errorLoad": "Falha ao carregar projetos."
+	},
+	"projects": {
+		"name": "Nome",
+		"slug": "Slug",
+		"createTitle": "Criar Projeto",
+		"createDescription": "Projetos agrupam feature flags por aplicação ou serviço.",
+		"environments": "Ambientes",
+		"createEnvironment": "Criar Ambiente",
+		"envName": "Nome do ambiente",
+		"errorLoad": "Falha ao carregar projeto.",
+		"envCreated": "Ambiente criado",
+		"envCreateError": "Falha ao criar ambiente"
+	},
+	"flags": {
+		"key": "Chave",
+		"type": "Tipo",
+		"enabled": "Ativo",
+		"updatedAt": "Atualizado",
+		"description": "Descrição",
+		"createdAt": "Criado",
+		"createTitle": "Criar Flag",
+		"createDescription": "Feature flags controlam a visibilidade de funcionalidades na sua aplicação.",
+		"typeBoolLabel": "Booleano",
+		"typeStringLabel": "String",
+		"typeNumberLabel": "Número",
+		"noFlags": "Nenhuma flag neste ambiente.",
+		"noEnvironments": "Nenhum ambiente ainda. Crie um para começar a adicionar flags.",
+		"errorLoad": "Falha ao carregar flag.",
+		"toggleError": "Falha ao alternar flag",
+		"ruleAdded": "Regra adicionada",
+		"ruleAddError": "Falha ao adicionar regra",
+		"ruleDeleted": "Regra excluída",
+		"ruleDeleteError": "Falha ao excluir regra"
+	},
+	"targeting": {
+		"title": "Regras de Segmentação",
+		"addRule": "Adicionar Regra",
+		"attribute": "Atributo",
+		"operator": "Operador",
+		"value": "Valor",
+		"result": "Valor do resultado",
+		"addCondition": "Adicionar Condição",
+		"saveRule": "Salvar Regra",
+		"noRules": "Sem regras de segmentação. O valor padrão será usado para todos os usuários.",
+		"operators": {
+			"eq": "igual a",
+			"neq": "diferente de",
+			"contains": "contém",
+			"startsWith": "começa com",
+			"endsWith": "termina com",
+			"gt": "maior que",
+			"lt": "menor que",
+			"in": "na lista"
+		}
+	},
+	"apiKeys": {
+		"title": "Chaves de API",
+		"name": "Nome",
+		"keyPrefix": "Chave",
+		"scope": "Escopo",
+		"createdAt": "Criado",
+		"lastUsed": "Último uso",
+		"never": "Nunca",
+		"createTitle": "Criar Chave de API",
+		"createDescription": "Chaves de API autenticam requisições à API do FlagBridge.",
+		"scopeEvaluation": "Avaliação",
+		"scopeManagement": "Gerenciamento",
+		"scopeFull": "Acesso total",
+		"project": "Projeto",
+		"keyWarning": "Esta chave será exibida apenas uma vez. Copie-a agora.",
+		"yourKey": "Sua Chave de API",
+		"errorLoad": "Falha ao carregar chaves de API."
+	}
+}
