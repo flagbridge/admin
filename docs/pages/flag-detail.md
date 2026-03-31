@@ -11,11 +11,11 @@ Shows the full detail of a single feature flag: metadata (key, type, description
 
 | Method | Endpoint | Purpose |
 |--------|----------|---------|
-| `GET` | `/api/v1/projects/{slug}/flags/{key}` | Fetch flag with nested states and rules |
-| `GET` | `/api/v1/projects/{slug}/environments` | List environments for tab bar |
-| `PUT` | `/api/v1/projects/{slug}/flags/{key}/states/{env}` | Toggle flag enabled state per environment |
-| `POST` | `/api/v1/projects/{slug}/flags/{key}/rules` | Create a targeting rule |
-| `DELETE` | `/api/v1/projects/{slug}/flags/{key}/rules/{id}` | Delete a targeting rule |
+| `GET` | `/v1/projects/{slug}/flags/{key}` | Fetch flag with nested states and rules |
+| `GET` | `/v1/projects/{slug}/environments` | List environments for tab bar |
+| `PUT` | `/v1/projects/{slug}/flags/{key}/states/{env}` | Toggle flag enabled state per environment |
+| `POST` | `/v1/projects/{slug}/flags/{key}/rules` | Create a targeting rule |
+| `DELETE` | `/v1/projects/{slug}/flags/{key}/rules/{id}` | Delete a targeting rule |
 
 ## Component Tree
 

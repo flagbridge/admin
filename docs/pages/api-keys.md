@@ -11,9 +11,9 @@ Manage API keys used to authenticate SDK and management API requests. Keys are s
 
 | Method | Endpoint | Purpose |
 |--------|----------|---------|
-| `GET` | `/api/v1/api-keys` | List all API keys |
-| `POST` | `/api/v1/api-keys` | Create a new API key |
-| `DELETE` | `/api/v1/api-keys/{id}` | Revoke an API key |
+| `GET` | `/v1/api-keys` | List all API keys |
+| `POST` | `/v1/api-keys` | Create a new API key |
+| `DELETE` | `/v1/api-keys/{id}` | Revoke an API key |
 
 ## Component Tree
 

@@ -11,11 +11,11 @@ Shows all feature flags for a project, scoped to the selected environment. Users
 
 | Method | Endpoint | Purpose |
 |--------|----------|---------|
-| `GET` | `/api/v1/projects/{slug}/environments` | List environments for the project |
-| `POST` | `/api/v1/projects/{slug}/environments` | Create a new environment |
-| `GET` | `/api/v1/projects/{slug}/flags?environment={env}` | List flags in selected environment |
-| `POST` | `/api/v1/projects/{slug}/flags` | Create a new flag |
-| `PUT` | `/api/v1/projects/{slug}/flags/{key}/states/{env}` | Toggle flag enabled state (optimistic) |
+| `GET` | `/v1/projects/{slug}/environments` | List environments for the project |
+| `POST` | `/v1/projects/{slug}/environments` | Create a new environment |
+| `GET` | `/v1/projects/{slug}/flags?environment={env}` | List flags in selected environment |
+| `POST` | `/v1/projects/{slug}/flags` | Create a new flag |
+| `PUT` | `/v1/projects/{slug}/flags/{key}/states/{env}` | Toggle flag enabled state (optimistic) |
 
 ## Component Tree
 

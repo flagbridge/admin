@@ -11,8 +11,8 @@ Entry point for authenticated users. Lists all projects as cards. From here user
 
 | Method | Endpoint | Purpose |
 |--------|----------|---------|
-| `GET` | `/api/v1/projects` | Fetch all projects |
-| `POST` | `/api/v1/projects` | Create a new project |
+| `GET` | `/v1/projects` | Fetch all projects |
+| `POST` | `/v1/projects` | Create a new project |
 
 ## Component Tree
 
