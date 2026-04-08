@@ -1,53 +1,81 @@
 @import "tailwindcss";
 
 @theme inline {
-	--color-slate-900: #0F172A;
-	--color-slate-800: #1E293B;
-	--color-slate-700: #334155;
-	--color-slate-600: #475569;
-	--color-slate-500: #64748B;
-	--color-slate-400: #94A3B8;
-	--color-slate-300: #CBD5E1;
-	--color-slate-200: #E2E8F0;
-	--color-slate-100: #F1F5F9;
-	--color-slate-50: #F8FAFC;
-	--color-blue-500: #3B82F6;
-	--color-blue-600: #2563EB;
-	--color-green-400: #4ADE80;
-	--color-green-500: #22C55E;
-	--color-orange-400: #FB923C;
-	--color-orange-500: #F97316;
-	--color-red-400: #F87171;
-	--color-red-500: #EF4444;
-	--color-red-600: #DC2626;
-	--font-sans: var(--font-geist-sans);
-	--font-mono: var(--font-geist-mono);
+  --color-slate-900: #0f172a;
+  --color-slate-800: #1e293b;
+  --color-slate-700: #334155;
+  --color-slate-600: #475569;
+  --color-slate-500: #64748b;
+  --color-slate-400: #94a3b8;
+  --color-slate-300: #cbd5e1;
+  --color-slate-200: #e2e8f0;
+  --color-slate-100: #f1f5f9;
+  --color-slate-50: #f8fafc;
+  --color-blue-500: #3b82f6;
+  --color-blue-600: #2563eb;
+  --color-green-400: #4ade80;
+  --color-green-500: #22c55e;
+  --color-orange-400: #fb923c;
+  --color-orange-500: #f97316;
+  --color-red-400: #f87171;
+  --color-red-500: #ef4444;
+  --color-red-600: #dc2626;
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
 }
 
 body {
-	background: var(--color-slate-900);
-	color: var(--color-slate-200);
+  background: var(--color-slate-900);
+  color: var(--color-slate-200);
 }
 
 /* Radix dialog animations */
 @keyframes fadeIn {
-	from { opacity: 0; }
-	to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 @keyframes fadeOut {
-	from { opacity: 1; }
-	to { opacity: 0; }
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 @keyframes zoomIn {
-	from { opacity: 0; transform: translate(-50%, -50%) scale(0.95); }
-	to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
 }
 @keyframes zoomOut {
-	from { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-	to { opacity: 0; transform: translate(-50%, -50%) scale(0.95); }
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.95);
+  }
 }
 
-[data-state="open"].animate-in { animation: fadeIn 150ms ease-out; }
-[data-state="closed"].animate-out { animation: fadeOut 100ms ease-in; }
-.zoom-in-95[data-state="open"] { animation: zoomIn 150ms ease-out; }
-.zoom-out-95[data-state="closed"] { animation: zoomOut 100ms ease-in; }
+[data-state="open"].animate-in {
+  animation: fadeIn 150ms ease-out;
+}
+[data-state="closed"].animate-out {
+  animation: fadeOut 100ms ease-in;
+}
+.zoom-in-95[data-state="open"] {
+  animation: zoomIn 150ms ease-out;
+}
+.zoom-out-95[data-state="closed"] {
+  animation: zoomOut 100ms ease-in;
+}
