@@ -2,19 +2,16 @@
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/lib/api";
-import type { Flag, FlagState } from "@/lib/types";
+import type { EnvSummary, Flag, FlagState } from "@/lib/types";
 
-interface FlagWithState extends Flag {
-  state?: FlagState;
+export interface FlagWithEnvs extends Flag {
+  environments: Record<string, EnvSummary>;
 }
 
-export function useFlags(projectSlug: string, envSlug?: string) {
+export function useFlags(projectSlug: string) {
   return useQuery({
-    queryKey: ["flags", projectSlug, envSlug],
-    queryFn: () => {
-      const params = envSlug ? `?environment=${envSlug}` : "";
-      return api<FlagWithState[]>(`/v1/projects/${projectSlug}/flags${params}`);
-    },
+    queryKey: ["flags", projectSlug],
+    queryFn: () => api<FlagWithEnvs[]>(`/v1/projects/${projectSlug}/flags`),
     enabled: !!projectSlug,
   });
 }
@@ -96,32 +93,37 @@ export function useToggleFlag(projectSlug: string) {
       ),
     onMutate: async ({ flagKey, envSlug, enabled }) => {
       await qc.cancelQueries({
-        queryKey: ["flags", projectSlug, envSlug],
+        queryKey: ["flags", projectSlug],
       });
-      const prev = qc.getQueryData<FlagWithState[]>([
-        "flags",
-        projectSlug,
-        envSlug,
-      ]);
+      const prev = qc.getQueryData<FlagWithEnvs[]>(["flags", projectSlug]);
       if (prev) {
         qc.setQueryData(
-          ["flags", projectSlug, envSlug],
+          ["flags", projectSlug],
           prev.map((f) =>
             f.key === flagKey
-              ? { ...f, state: { ...f.state, enabled } as FlagState }
+              ? {
+                  ...f,
+                  environments: {
+                    ...f.environments,
+                    [envSlug]: {
+                      ...f.environments[envSlug],
+                      enabled,
+                    },
+                  },
+                }
               : f,
           ),
         );
       }
       return { prev };
     },
-    onError: (_err, { envSlug }, context) => {
+    onError: (_err, _vars, context) => {
       if (context?.prev) {
-        qc.setQueryData(["flags", projectSlug, envSlug], context.prev);
+        qc.setQueryData(["flags", projectSlug], context.prev);
       }
     },
-    onSettled: (_data, _err, { envSlug }) => {
-      qc.invalidateQueries({ queryKey: ["flags", projectSlug, envSlug] });
+    onSettled: () => {
+      qc.invalidateQueries({ queryKey: ["flags", projectSlug] });
     },
   });
 }

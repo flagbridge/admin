@@ -39,6 +39,11 @@ export interface Flag {
   updated_at: string;
 }
 
+export interface EnvSummary {
+  enabled: boolean;
+  rule_count: number;
+}
+
 export interface FlagState {
   id: string;
   flag_id: string;

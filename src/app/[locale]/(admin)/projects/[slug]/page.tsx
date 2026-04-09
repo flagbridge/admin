@@ -35,7 +35,7 @@ export default function ProjectPage() {
     data: flags,
     isLoading: flagsLoading,
     isError: flagsError,
-  } = useFlags(slug, selectedEnv);
+  } = useFlags(slug);
   const toggleFlag = useToggleFlag(slug);
 
   const [createFlagOpen, setCreateFlagOpen] = useState(false);
@@ -126,6 +126,7 @@ export default function ProjectPage() {
               <FlagTable
                 flags={flags || []}
                 projectSlug={slug}
+                selectedEnv={selectedEnv}
                 onToggle={(flagKey, enabled) =>
                   toggleFlag.mutate({
                     flagKey,

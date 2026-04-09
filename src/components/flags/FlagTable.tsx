@@ -8,17 +8,14 @@ import { Button } from "@/components/ui/Button";
 import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
 import { useToast } from "@/components/ui/Toast";
 import { Toggle } from "@/components/ui/Toggle";
-import { useDeleteFlag } from "@/hooks/useFlags";
+import { type FlagWithEnvs, useDeleteFlag } from "@/hooks/useFlags";
 import { Link } from "@/i18n/navigation";
-import type { Flag, FlagState } from "@/lib/types";
-
-interface FlagWithState extends Flag {
-  state?: FlagState;
-}
+import type { Flag } from "@/lib/types";
 
 interface FlagTableProps {
-  flags: FlagWithState[];
+  flags: FlagWithEnvs[];
   projectSlug: string;
+  selectedEnv: string;
   onToggle: (flagKey: string, enabled: boolean) => void;
   togglePending?: boolean;
 }
@@ -32,6 +29,7 @@ const typeBadgeVariant = {
 export function FlagTable({
   flags,
   projectSlug,
+  selectedEnv,
   onToggle,
   togglePending,
 }: FlagTableProps) {
@@ -98,7 +96,7 @@ export function FlagTable({
                 </td>
                 <td className="px-4 py-3">
                   <Toggle
-                    checked={flag.state?.enabled ?? false}
+                    checked={flag.environments?.[selectedEnv]?.enabled ?? false}
                     onChange={(checked) => onToggle(flag.key, checked)}
                     disabled={togglePending}
                   />
