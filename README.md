@@ -1,36 +1,79 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FlagBridge Admin Dashboard
+
+The web interface for managing feature flags, plugins, projects, and environments in [FlagBridge](https://github.com/flagbridge/flagbridge).
+
+Full documentation at [docs.flagbridge.io](https://docs.flagbridge.io).
+
+---
+
+## Stack
+
+| Layer | Technology |
+|---|---|
+| Framework | Next.js 16 (App Router) |
+| Language | TypeScript (strict) |
+| Styling | Tailwind CSS v4 |
+| UI primitives | Radix UI |
+| Data fetching | TanStack Query v5 |
+| Linting/formatting | Biome.js |
+| i18n | next-intl (EN + PT-BR) |
+| Deploy | Vercel |
+
+## Route Structure
+
+```
+src/app/[locale]/
+├── (marketing)/        # Landing page, /developers, /marketplace, /founders-circle
+├── (admin)/            # Dashboard, projects, flags, plugins, settings, audit log
+└── (developer)/        # Plugin SDK docs, API explorer, sandbox
+```
+
+## Features
+
+- **Flag management** — create, edit, toggle, and configure targeting rules per environment
+- **Project & environment management** — organize flags across multiple projects and environments
+- **Plugin marketplace** — browse and install plugins built on the FlagBridge Plugin SDK
+- **Audit log** — full history of flag changes and user actions
+- **Pro feature gating** — `ProGate` component controls access to paid features
+- **Internationalization** — full EN and PT-BR support via next-intl
+
+### Pro Gating
+
+Features behind the Pro plan are wrapped with `ProGate`. It reads from the internal `_flagbridge` project — if the flag is off, it renders an upgrade CTA instead of the protected content.
+
+```tsx
+<ProGate flag="pro.analytics">
+  <AnalyticsDashboard />
+</ProGate>
+```
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Commands
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+pnpm dev        # Start development server
+pnpm build      # Production build
+pnpm lint       # Run Biome.js check (biome check .)
+```
 
-## Learn More
+## Conventions
 
-To learn more about Next.js, take a look at the following resources:
+- **Server Components by default** — add `"use client"` only when the component requires interactivity or browser APIs.
+- **TanStack Query for all data fetching** — no raw `fetch` calls in components.
+- **Radix UI for interactive primitives** — dialogs, dropdowns, tooltips, etc.
+- **Tailwind only** — no CSS Modules or CSS-in-JS.
+- **All strings via next-intl** — zero hardcoded user-facing text.
+- **Every data component** handles loading, error, and empty states.
+- **File naming** — `kebab-case` for files, `PascalCase` for components.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## License
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Apache 2.0 — see [LICENSE](../flagbridge/LICENSE) in the main repository.
