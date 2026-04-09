@@ -124,9 +124,9 @@ export async function setAuthCookies(page: Page): Promise<void> {
 
 const API_BASE = "https://api.flagbridge.io";
 
-type JsonBody = Record<string, unknown> | unknown[];
-
-function apiReply(route: Route, body: JsonBody, status = 200): Promise<void> {
+// biome-ignore lint: test helper accepts any serializable value
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function apiReply(route: Route, body: any, status = 200): Promise<void> {
   return route.fulfill({
     status,
     contentType: "application/json",
