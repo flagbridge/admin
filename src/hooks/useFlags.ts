@@ -38,6 +38,42 @@ export function useCreateFlag(projectSlug: string) {
   });
 }
 
+export function useUpdateFlag(projectSlug: string) {
+  const qc = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({
+      flagKey,
+      data,
+    }: {
+      flagKey: string;
+      data: { description?: string };
+    }) =>
+      api<Flag>(`/v1/projects/${projectSlug}/flags/${flagKey}`, {
+        method: "PATCH",
+        body: JSON.stringify(data),
+      }),
+    onSuccess: (_data, { flagKey }) => {
+      qc.invalidateQueries({ queryKey: ["flags", projectSlug] });
+      qc.invalidateQueries({ queryKey: ["flag", projectSlug, flagKey] });
+    },
+  });
+}
+
+export function useDeleteFlag(projectSlug: string) {
+  const qc = useQueryClient();
+
+  return useMutation({
+    mutationFn: (flagKey: string) =>
+      api<void>(`/v1/projects/${projectSlug}/flags/${flagKey}`, {
+        method: "DELETE",
+      }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["flags", projectSlug] });
+    },
+  });
+}
+
 export function useToggleFlag(projectSlug: string) {
   const qc = useQueryClient();
 

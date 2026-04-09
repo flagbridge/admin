@@ -41,7 +41,15 @@
     "envName": "Nome do ambiente",
     "errorLoad": "Falha ao carregar projeto.",
     "envCreated": "Ambiente criado",
-    "envCreateError": "Falha ao criar ambiente"
+    "envCreateError": "Falha ao criar ambiente",
+    "editTitle": "Editar Projeto",
+    "editDescription": "Atualize os detalhes do seu projeto.",
+    "updated": "Projeto atualizado",
+    "updateError": "Falha ao atualizar projeto",
+    "deleted": "Projeto excluído",
+    "deleteError": "Falha ao excluir projeto",
+    "deleteConfirm": "Tem certeza que deseja excluir \"{name}\"? Todas as flags e ambientes serão removidos permanentemente.",
+    "description": "Descrição"
   },
   "flags": {
     "key": "Chave",
@@ -62,7 +70,15 @@
     "ruleAdded": "Regra adicionada",
     "ruleAddError": "Falha ao adicionar regra",
     "ruleDeleted": "Regra excluída",
-    "ruleDeleteError": "Falha ao excluir regra"
+    "ruleDeleteError": "Falha ao excluir regra",
+    "editTitle": "Editar Flag",
+    "editDescription": "Atualize a descrição da flag.",
+    "updated": "Flag atualizada",
+    "updateError": "Falha ao atualizar flag",
+    "deleted": "Flag excluída",
+    "deleteError": "Falha ao excluir flag",
+    "deleteConfirm": "Tem certeza que deseja excluir \"{key}\"? Todas as regras e estados serão removidos permanentemente.",
+    "actions": "Ações"
   },
   "targeting": {
     "title": "Regras de Segmentação",
@@ -101,6 +117,17 @@
     "project": "Projeto",
     "keyWarning": "Esta chave será exibida apenas uma vez. Copie-a agora.",
     "yourKey": "Sua Chave de API",
-    "errorLoad": "Falha ao carregar chaves de API."
+    "noKeys": "Nenhuma chave de API ainda.",
+    "errorLoad": "Falha ao carregar chaves de API.",
+    "deleteTitle": "Excluir Chave de API",
+    "deleteConfirm": "Tem certeza que deseja excluir \"{name}\"? Esta ação não pode ser desfeita.",
+    "deleted": "Chave de API excluída",
+    "deleteError": "Falha ao excluir chave de API",
+    "actions": "Ações"
+  },
+  "confirm": {
+    "deleteTitle": "Confirmar Exclusão",
+    "cancel": "Cancelar",
+    "delete": "Excluir"
   }
 }

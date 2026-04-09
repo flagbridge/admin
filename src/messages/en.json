@@ -41,7 +41,15 @@
     "envName": "Environment name",
     "errorLoad": "Failed to load project.",
     "envCreated": "Environment created",
-    "envCreateError": "Failed to create environment"
+    "envCreateError": "Failed to create environment",
+    "editTitle": "Edit Project",
+    "editDescription": "Update your project details.",
+    "updated": "Project updated",
+    "updateError": "Failed to update project",
+    "deleted": "Project deleted",
+    "deleteError": "Failed to delete project",
+    "deleteConfirm": "Are you sure you want to delete \"{name}\"? All flags and environments will be permanently removed.",
+    "description": "Description"
   },
   "flags": {
     "key": "Key",
@@ -62,7 +70,15 @@
     "ruleAdded": "Rule added",
     "ruleAddError": "Failed to add rule",
     "ruleDeleted": "Rule deleted",
-    "ruleDeleteError": "Failed to delete rule"
+    "ruleDeleteError": "Failed to delete rule",
+    "editTitle": "Edit Flag",
+    "editDescription": "Update flag description.",
+    "updated": "Flag updated",
+    "updateError": "Failed to update flag",
+    "deleted": "Flag deleted",
+    "deleteError": "Failed to delete flag",
+    "deleteConfirm": "Are you sure you want to delete \"{key}\"? All targeting rules and states will be permanently removed.",
+    "actions": "Actions"
   },
   "targeting": {
     "title": "Targeting Rules",
@@ -101,6 +117,17 @@
     "project": "Project",
     "keyWarning": "This key will only be shown once. Copy it now.",
     "yourKey": "Your API Key",
-    "errorLoad": "Failed to load API keys."
+    "noKeys": "No API keys yet.",
+    "errorLoad": "Failed to load API keys.",
+    "deleteTitle": "Delete API Key",
+    "deleteConfirm": "Are you sure you want to delete \"{name}\"? This action cannot be undone.",
+    "deleted": "API key deleted",
+    "deleteError": "Failed to delete API key",
+    "actions": "Actions"
+  },
+  "confirm": {
+    "deleteTitle": "Confirm Delete",
+    "cancel": "Cancel",
+    "delete": "Delete"
   }
 }
