@@ -14,7 +14,8 @@
   "nav": {
     "dashboard": "Dashboard",
     "apiKeys": "API Keys",
-    "projects": "Projects"
+    "projects": "Projects",
+    "auditLog": "Audit Log"
   },
   "login": {
     "title": "Admin",
@@ -130,5 +131,14 @@
     "deleteTitle": "Confirm Delete",
     "cancel": "Cancel",
     "delete": "Delete"
+  },
+  "audit": {
+    "title": "Audit Log",
+    "action": "Action",
+    "entityType": "Entity",
+    "changes": "Changes",
+    "timestamp": "Timestamp",
+    "noEntries": "No audit entries found.",
+    "errorLoad": "Failed to load audit log."
   }
 }

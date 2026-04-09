@@ -1,6 +1,6 @@
 "use client";
 
-import { KeyRound, LayoutDashboard } from "lucide-react";
+import { KeyRound, LayoutDashboard, ScrollText } from "lucide-react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Badge } from "@/components/ui/Badge";
@@ -9,6 +9,7 @@ import { Link, usePathname } from "@/i18n/navigation";
 const navItems = [
   { href: "/", icon: LayoutDashboard, labelKey: "dashboard" as const },
   { href: "/api-keys", icon: KeyRound, labelKey: "apiKeys" as const },
+  { href: "/audit", icon: ScrollText, labelKey: "auditLog" as const },
 ];
 
 interface SidebarProps {

@@ -14,7 +14,8 @@
   "nav": {
     "dashboard": "Painel",
     "apiKeys": "Chaves de API",
-    "projects": "Projetos"
+    "projects": "Projetos",
+    "auditLog": "Log de Auditoria"
   },
   "login": {
     "title": "Admin",
@@ -130,5 +131,14 @@
     "deleteTitle": "Confirmar Exclusão",
     "cancel": "Cancelar",
     "delete": "Excluir"
+  },
+  "audit": {
+    "title": "Log de Auditoria",
+    "action": "Ação",
+    "entityType": "Entidade",
+    "changes": "Alterações",
+    "timestamp": "Data/Hora",
+    "noEntries": "Nenhuma entrada de auditoria encontrada.",
+    "errorLoad": "Falha ao carregar log de auditoria."
   }
 }

@@ -108,6 +108,18 @@ export interface APIKeyCreateResponse {
   key: string;
 }
 
+export interface AuditEntry {
+  id: string;
+  project_id: string;
+  user_id: string | null;
+  action: string;
+  entity_type: string;
+  entity_id: string;
+  changes: Record<string, unknown> | null;
+  ip_address: string | null;
+  created_at: string;
+}
+
 export interface AuthResponse {
   token: string;
   user: User;
