@@ -3,6 +3,7 @@
 import { Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
+import { EnvironmentBubbles } from "@/components/flags/EnvironmentBubbles";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
@@ -65,6 +66,9 @@ export function FlagTable({
                 {t("type")}
               </th>
               <th className="px-4 py-3 font-medium text-slate-400">
+                {t("environments")}
+              </th>
+              <th className="px-4 py-3 font-medium text-slate-400">
                 {t("enabled")}
               </th>
               <th className="px-4 py-3 font-medium text-slate-400">
@@ -93,6 +97,12 @@ export function FlagTable({
                   <Badge variant={typeBadgeVariant[flag.type]}>
                     {flag.type}
                   </Badge>
+                </td>
+                <td className="px-4 py-3">
+                  <EnvironmentBubbles
+                    environments={flag.environments ?? {}}
+                    selectedEnv={selectedEnv}
+                  />
                 </td>
                 <td className="px-4 py-3">
                   <Toggle

@@ -54,6 +54,7 @@
   "flags": {
     "key": "Key",
     "type": "Type",
+    "environments": "Environments",
     "enabled": "Enabled",
     "updatedAt": "Updated",
     "description": "Description",

@@ -54,6 +54,7 @@
   "flags": {
     "key": "Chave",
     "type": "Tipo",
+    "environments": "Ambientes",
     "enabled": "Ativo",
     "updatedAt": "Atualizado",
     "description": "Descrição",
