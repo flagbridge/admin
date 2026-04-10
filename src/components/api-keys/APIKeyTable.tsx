@@ -1,6 +1,6 @@
 "use client";
 
-import { Trash2 } from "lucide-react";
+import { Copy, KeyRound, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Badge } from "@/components/ui/Badge";
@@ -29,14 +29,17 @@ export function APIKeyTable({ keys }: APIKeyTableProps) {
   const handleDelete = () => {
     if (!deleteTarget) return;
     deleteKey.mutate(deleteTarget.id, {
-      onSuccess: () => toast(t("deleted")),
-      onError: () => toast(t("deleteError")),
+      onSuccess: () => toast(t("deleted"), "success"),
+      onError: () => toast(t("deleteError"), "error"),
     });
   };
 
   if (!keys.length) {
     return (
-      <p className="py-12 text-center text-sm text-slate-500">{t("noKeys")}</p>
+      <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-slate-700 py-20 text-center">
+        <KeyRound className="mb-4 h-12 w-12 text-slate-600" />
+        <h2 className="text-lg font-medium text-slate-300">{t("noKeys")}</h2>
+      </div>
     );
   }
 
@@ -73,8 +76,18 @@ export function APIKeyTable({ keys }: APIKeyTableProps) {
                 className="hover:bg-slate-800/30 transition-colors"
               >
                 <td className="px-4 py-3 text-slate-200">{key.name}</td>
-                <td className="px-4 py-3 font-mono text-sm text-slate-400">
-                  {key.key_prefix}...
+                <td className="px-4 py-3">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      navigator.clipboard.writeText(key.key_prefix);
+                      toast(t("copied") ?? "Copied!", "success");
+                    }}
+                    className="group flex items-center gap-1.5 font-mono text-sm text-slate-400 hover:text-slate-200 transition-colors"
+                  >
+                    {key.key_prefix}...
+                    <Copy className="h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </button>
                 </td>
                 <td className="px-4 py-3">
                   <Badge variant={scopeVariant[key.scope]}>{key.scope}</Badge>

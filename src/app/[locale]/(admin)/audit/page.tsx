@@ -49,7 +49,7 @@ export default function AuditLogPage() {
             <div className="h-6 w-6 animate-spin rounded-full border-2 border-slate-600 border-t-blue-500" />
           </div>
         ) : isError ? (
-          <div className="flex flex-col items-center justify-center py-20 text-center">
+          <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-slate-700 py-20 text-center">
             <AlertCircle className="mb-4 h-12 w-12 text-red-500" />
             <p className="text-sm text-slate-400">{t("errorLoad")}</p>
           </div>

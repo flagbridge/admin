@@ -120,6 +120,33 @@ export interface AuditEntry {
   created_at: string;
 }
 
+export interface Webhook {
+  id: string;
+  project_id: string;
+  url: string;
+  events: string[];
+  enabled: boolean;
+  created_by: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface WebhookCreateResponse extends Webhook {
+  secret: string;
+}
+
+export interface WebhookDeliveryLog {
+  id: string;
+  webhook_id: string;
+  event_type: string;
+  payload: string;
+  status_code: number;
+  response?: string;
+  attempts: number;
+  success: boolean;
+  created_at: string;
+}
+
 export interface AuthResponse {
   token: string;
   user: User;

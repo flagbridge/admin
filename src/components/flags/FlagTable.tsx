@@ -1,6 +1,6 @@
 "use client";
 
-import { Trash2 } from "lucide-react";
+import { Flag as FlagIcon, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { EnvironmentBubbles } from "@/components/flags/EnvironmentBubbles";
@@ -42,14 +42,17 @@ export function FlagTable({
   const handleDelete = () => {
     if (!deleteTarget) return;
     deleteFlag.mutate(deleteTarget.key, {
-      onSuccess: () => toast(t("deleted")),
-      onError: () => toast(t("deleteError")),
+      onSuccess: () => toast(t("deleted"), "success"),
+      onError: () => toast(t("deleteError"), "error"),
     });
   };
 
   if (!flags.length) {
     return (
-      <p className="py-12 text-center text-sm text-slate-500">{t("noFlags")}</p>
+      <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-slate-700 py-20 text-center">
+        <FlagIcon className="mb-4 h-12 w-12 text-slate-600" />
+        <h2 className="text-lg font-medium text-slate-300">{t("noFlags")}</h2>
+      </div>
     );
   }
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { AlertCircle, Plus, Server } from "lucide-react";
+import { AlertCircle, Globe, Plus, Server, Settings } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/Button";
 import { Dialog } from "@/components/ui/Dialog";
 import { Input } from "@/components/ui/Input";
 import { useToast } from "@/components/ui/Toast";
+import { Link } from "@/i18n/navigation";
 import { useCreateEnvironment, useEnvironments } from "@/hooks/useEnvironments";
 import { useFlags, useToggleFlag } from "@/hooks/useFlags";
 
@@ -67,6 +68,24 @@ export default function ProjectPage() {
     <>
       <TopBar
         breadcrumbs={[{ label: tn("projects"), href: "/" }, { label: slug }]}
+        actions={
+          <div className="flex items-center gap-1">
+            <Link
+              href={`/projects/${slug}/webhooks`}
+              className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm text-slate-400 hover:bg-slate-800 hover:text-slate-200 transition-colors"
+            >
+              <Globe className="h-4 w-4" />
+              Webhooks
+            </Link>
+            <Link
+              href={`/projects/${slug}/settings`}
+              className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm text-slate-400 hover:bg-slate-800 hover:text-slate-200 transition-colors"
+            >
+              <Settings className="h-4 w-4" />
+              {tn("settings")}
+            </Link>
+          </div>
+        }
       />
       <main className="mx-auto max-w-[1200px] p-6">
         {!envsLoading && isError ? (
