@@ -2,17 +2,7 @@
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/lib/api";
-import type {
-  Flag,
-  FlagState,
-  RuleCondition,
-  TargetingRule,
-} from "@/lib/types";
-
-interface FlagDetail extends Flag {
-  states: Record<string, FlagState>;
-  rules: Record<string, TargetingRule[]>;
-}
+import type { FlagDetail, FlagState, RuleCondition, TargetingRule } from "@/lib/types";
 
 export function useFlag(projectSlug: string, flagKey: string) {
   return useQuery({

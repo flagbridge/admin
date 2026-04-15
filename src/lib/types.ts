@@ -156,3 +156,39 @@ export interface APIError {
   code: string;
   message: string;
 }
+
+export type ProjectRole = "admin" | "engineer" | "product" | "viewer";
+
+export type ViewMode = "product" | "engineering";
+
+export type ProductCardStatus =
+  | "planning"
+  | "active"
+  | "rolled_out"
+  | "archived";
+
+export interface ProductCard {
+  id: string;
+  flag_id: string;
+  project_id: string;
+  hypothesis: string;
+  success_metrics: string;
+  go_no_go: string;
+  owner_id?: string;
+  status: ProductCardStatus;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ProductCardInput {
+  hypothesis?: string;
+  success_metrics?: string;
+  go_no_go?: string;
+  owner_id?: string;
+  status?: ProductCardStatus;
+}
+
+export interface FlagDetail extends Flag {
+  states: Record<string, FlagState>;
+  rules: Record<string, TargetingRule[]>;
+}
