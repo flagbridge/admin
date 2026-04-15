@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import type { ReactNode } from "react";
 import { Sidebar } from "@/components/layout/Sidebar";
+import { OnboardingWizard } from "@/components/onboarding/OnboardingWizard";
 import { useAuth } from "@/hooks/useAuth";
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
@@ -19,6 +20,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
     <div className="flex h-full">
       <Sidebar userEmail={user?.email} onSignOut={handleSignOut} />
       <div className="flex-1 ml-60">{children}</div>
+      <OnboardingWizard />
     </div>
   );
 }

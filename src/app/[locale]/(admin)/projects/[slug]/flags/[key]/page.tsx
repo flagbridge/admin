@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { FlagToggle } from "@/components/flags/FlagToggle";
+import { ProductCardTab } from "@/components/flags/ProductCardTab";
 import { TargetingRules } from "@/components/flags/TargetingRules";
 import { TopBar } from "@/components/layout/TopBar";
 import { Badge } from "@/components/ui/Badge";
@@ -16,6 +17,7 @@ import {
   useSetRules,
   useToggleFlagState,
 } from "@/hooks/useFlag";
+import { useViewMode } from "@/hooks/useViewMode";
 import type { RuleCondition } from "@/lib/types";
 
 const typeBadgeVariant = {
@@ -24,17 +26,26 @@ const typeBadgeVariant = {
   number: "success" as const,
 };
 
+type DetailTab = "rules" | "product-card";
+
 export default function FlagDetailPage() {
   const params = useParams<{ slug: string; key: string }>();
   const { slug, key: flagKey } = params;
   const t = useTranslations("flags");
   const tn = useTranslations("nav");
+  const tpc = useTranslations("productCard");
+  const tt = useTranslations("targeting");
   const { toast } = useToast();
+  const { viewMode } = useViewMode();
 
   const { data: flag, isLoading, isError } = useFlag(slug, flagKey);
   const { data: environments } = useEnvironments(slug);
   const [activeEnv, setActiveEnv] = useState<string>("");
   const selectedEnv = activeEnv || environments?.[0]?.slug || "";
+
+  const [activeTab, setActiveTab] = useState<DetailTab>(
+    viewMode === "product" ? "product-card" : "rules",
+  );
 
   const toggleState = useToggleFlagState(slug, flagKey);
   const { data: rules } = useFlagRules(slug, flagKey, selectedEnv);
@@ -70,6 +81,16 @@ export default function FlagDetailPage() {
       </>
     );
   }
+
+  const detailTabs: { key: DetailTab; label: string }[] = [
+    ...(viewMode === "engineering"
+      ? [{ key: "rules" as const, label: tt("title") }]
+      : []),
+    { key: "product-card" as const, label: tpc("title") },
+    ...(viewMode === "product"
+      ? [{ key: "rules" as const, label: tt("title") }]
+      : []),
+  ];
 
   return (
     <>
@@ -139,58 +160,83 @@ export default function FlagDetailPage() {
           </div>
         </div>
 
-        {/* Targeting rules */}
-        <TargetingRules
-          rules={currentRules}
-          onAddRule={(conditions: RuleCondition[], resultValue: string) => {
-            const newRule = {
-              name: "",
-              priority: currentRules.length,
-              conditions,
-              value: resultValue,
-              enabled: true,
-            };
-            const existingInputs = currentRules.map((r) => ({
-              name: r.name,
-              priority: r.priority,
-              conditions: r.conditions,
-              value: r.value,
-              enabled: r.enabled,
-            }));
-            setRules.mutate(
-              {
-                envSlug: selectedEnv,
-                rules: [...existingInputs, newRule],
-              },
-              {
-                onSuccess: () => toast(t("ruleAdded"), "success"),
-                onError: () => toast(t("ruleAddError"), "error"),
-              },
-            );
-          }}
-          onDeleteRule={(ruleId: string) => {
-            const remaining = currentRules
-              .filter((r) => r.id !== ruleId)
-              .map((r, i) => ({
+        {/* Detail tabs: Rules + Product Card */}
+        <div className="mb-6 flex gap-1 rounded-lg border border-slate-700 bg-slate-800 p-1 w-fit">
+          {detailTabs.map((tab) => (
+            <button
+              key={tab.key}
+              type="button"
+              onClick={() => setActiveTab(tab.key)}
+              className={`rounded-md px-4 py-1.5 text-sm font-medium transition-colors ${
+                activeTab === tab.key
+                  ? "bg-slate-700 text-slate-50"
+                  : "text-slate-400 hover:text-slate-200"
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+
+        {activeTab === "rules" && (
+          <TargetingRules
+            rules={currentRules}
+            onAddRule={(conditions: RuleCondition[], resultValue: string) => {
+              const newRule = {
+                name: "",
+                priority: currentRules.length,
+                conditions,
+                value: resultValue,
+                enabled: true,
+              };
+              const existingInputs = currentRules.map((r) => ({
                 name: r.name,
-                priority: i,
+                priority: r.priority,
                 conditions: r.conditions,
                 value: r.value,
                 enabled: r.enabled,
               }));
-            setRules.mutate(
-              {
-                envSlug: selectedEnv,
-                rules: remaining,
-              },
-              {
-                onSuccess: () => toast(t("ruleDeleted"), "success"),
-                onError: () => toast(t("ruleDeleteError"), "error"),
-              },
-            );
-          }}
-          isPending={setRules.isPending}
-        />
+              setRules.mutate(
+                {
+                  envSlug: selectedEnv,
+                  rules: [...existingInputs, newRule],
+                },
+                {
+                  onSuccess: () => toast(t("ruleAdded"), "success"),
+                  onError: () => toast(t("ruleAddError"), "error"),
+                },
+              );
+            }}
+            onDeleteRule={(ruleId: string) => {
+              const remaining = currentRules
+                .filter((r) => r.id !== ruleId)
+                .map((r, i) => ({
+                  name: r.name,
+                  priority: i,
+                  conditions: r.conditions,
+                  value: r.value,
+                  enabled: r.enabled,
+                }));
+              setRules.mutate(
+                {
+                  envSlug: selectedEnv,
+                  rules: remaining,
+                },
+                {
+                  onSuccess: () => toast(t("ruleDeleted"), "success"),
+                  onError: () => toast(t("ruleDeleteError"), "error"),
+                },
+              );
+            }}
+            isPending={setRules.isPending}
+          />
+        )}
+
+        {activeTab === "product-card" && (
+          <div className="rounded-xl border border-slate-700 bg-slate-800 p-6">
+            <ProductCardTab projectSlug={slug} flagKey={flagKey} />
+          </div>
+        )}
       </main>
     </>
   );

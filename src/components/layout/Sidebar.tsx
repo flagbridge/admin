@@ -4,12 +4,14 @@ import { KeyRound, LayoutDashboard, ScrollText } from "lucide-react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Badge } from "@/components/ui/Badge";
+import { RoleSwitcher } from "@/components/layout/RoleSwitcher";
+import { useViewMode } from "@/hooks/useViewMode";
 import { Link, usePathname } from "@/i18n/navigation";
 
-const navItems = [
-  { href: "/", icon: LayoutDashboard, labelKey: "dashboard" as const },
-  { href: "/api-keys", icon: KeyRound, labelKey: "apiKeys" as const },
-  { href: "/audit", icon: ScrollText, labelKey: "auditLog" as const },
+const allNavItems = [
+  { href: "/", icon: LayoutDashboard, labelKey: "dashboard" as const, views: ["product", "engineering"] as const },
+  { href: "/api-keys", icon: KeyRound, labelKey: "apiKeys" as const, views: ["engineering"] as const },
+  { href: "/audit", icon: ScrollText, labelKey: "auditLog" as const, views: ["product", "engineering"] as const },
 ];
 
 interface SidebarProps {
@@ -21,6 +23,12 @@ export function Sidebar({ userEmail, onSignOut }: SidebarProps) {
   const pathname = usePathname();
   const t = useTranslations("nav");
   const tc = useTranslations("common");
+  const tr = useTranslations("roles");
+  const { viewMode, userRole } = useViewMode();
+
+  const navItems = allNavItems.filter((item) =>
+    item.views.includes(viewMode),
+  );
 
   function isActive(href: string) {
     if (href === "/") return pathname === "/";
@@ -63,12 +71,16 @@ export function Sidebar({ userEmail, onSignOut }: SidebarProps) {
         })}
       </nav>
 
-      <div className="border-t border-slate-800 px-4 py-3">
+      <div className="border-t border-slate-800 px-4 py-3 space-y-3">
+        <RoleSwitcher />
         {userEmail && (
-          <div className="mb-2">
+          <div>
             <p className="truncate text-sm text-slate-300">{userEmail}</p>
-            <Badge variant="blue" className="mt-1">
-              Admin
+            <Badge
+              variant={viewMode === "product" ? "warning" : "blue"}
+              className="mt-1"
+            >
+              {tr(userRole)}
             </Badge>
           </div>
         )}

@@ -5,6 +5,8 @@ import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { CreateFlagDialog } from "@/components/flags/CreateFlagDialog";
+import { FlagCard } from "@/components/flags/FlagCard";
+import { FlagCreationWizard } from "@/components/flags/FlagCreationWizard";
 import { FlagTable } from "@/components/flags/FlagTable";
 import { TopBar } from "@/components/layout/TopBar";
 import { Button } from "@/components/ui/Button";
@@ -14,6 +16,7 @@ import { useToast } from "@/components/ui/Toast";
 import { Link } from "@/i18n/navigation";
 import { useCreateEnvironment, useEnvironments } from "@/hooks/useEnvironments";
 import { useFlags, useToggleFlag } from "@/hooks/useFlags";
+import { useViewMode } from "@/hooks/useViewMode";
 
 export default function ProjectPage() {
   const params = useParams<{ slug: string }>();
@@ -23,6 +26,9 @@ export default function ProjectPage() {
   const tn = useTranslations("nav");
   const tc = useTranslations("common");
   const { toast } = useToast();
+  const { viewMode } = useViewMode();
+
+  const isProductView = viewMode === "product";
 
   const {
     data: environments,
@@ -69,22 +75,24 @@ export default function ProjectPage() {
       <TopBar
         breadcrumbs={[{ label: tn("projects"), href: "/" }, { label: slug }]}
         actions={
-          <div className="flex items-center gap-1">
-            <Link
-              href={`/projects/${slug}/webhooks`}
-              className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm text-slate-400 hover:bg-slate-800 hover:text-slate-200 transition-colors"
-            >
-              <Globe className="h-4 w-4" />
-              Webhooks
-            </Link>
-            <Link
-              href={`/projects/${slug}/settings`}
-              className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm text-slate-400 hover:bg-slate-800 hover:text-slate-200 transition-colors"
-            >
-              <Settings className="h-4 w-4" />
-              {tn("settings")}
-            </Link>
-          </div>
+          !isProductView ? (
+            <div className="flex items-center gap-1">
+              <Link
+                href={`/projects/${slug}/webhooks`}
+                className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm text-slate-400 hover:bg-slate-800 hover:text-slate-200 transition-colors"
+              >
+                <Globe className="h-4 w-4" />
+                Webhooks
+              </Link>
+              <Link
+                href={`/projects/${slug}/settings`}
+                className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm text-slate-400 hover:bg-slate-800 hover:text-slate-200 transition-colors"
+              >
+                <Settings className="h-4 w-4" />
+                {tn("settings")}
+              </Link>
+            </div>
+          ) : undefined
         }
       />
       <main className="mx-auto max-w-[1200px] p-6">
@@ -121,14 +129,16 @@ export default function ProjectPage() {
                     {env.name}
                   </button>
                 ))}
-                <button
-                  type="button"
-                  onClick={() => setCreateEnvOpen(true)}
-                  className="rounded-md px-2 py-1.5 text-slate-500 hover:text-slate-300 transition-colors"
-                  title={tp("createEnvironment")}
-                >
-                  <Plus className="h-4 w-4" />
-                </button>
+                {!isProductView && (
+                  <button
+                    type="button"
+                    onClick={() => setCreateEnvOpen(true)}
+                    className="rounded-md px-2 py-1.5 text-slate-500 hover:text-slate-300 transition-colors"
+                    title={tp("createEnvironment")}
+                  >
+                    <Plus className="h-4 w-4" />
+                  </button>
+                )}
               </div>
 
               <Button onClick={() => setCreateFlagOpen(true)}>
@@ -141,7 +151,34 @@ export default function ProjectPage() {
               <div className="flex items-center justify-center py-20">
                 <div className="h-6 w-6 animate-spin rounded-full border-2 border-slate-600 border-t-blue-500" />
               </div>
+            ) : isProductView ? (
+              /* Product View: flag cards with context */
+              !flags?.length ? (
+                <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-slate-700 py-20 text-center">
+                  <p className="text-sm text-slate-400">{t("noFlags")}</p>
+                </div>
+              ) : (
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                  {flags.map((flag) => (
+                    <FlagCard
+                      key={flag.id}
+                      flag={flag}
+                      projectSlug={slug}
+                      selectedEnv={selectedEnv}
+                      onToggle={(flagKey, enabled) =>
+                        toggleFlag.mutate({
+                          flagKey,
+                          envSlug: selectedEnv,
+                          enabled,
+                        })
+                      }
+                      togglePending={toggleFlag.isPending}
+                    />
+                  ))}
+                </div>
+              )
             ) : (
+              /* Engineering View: flag table */
               <FlagTable
                 flags={flags || []}
                 projectSlug={slug}
@@ -159,11 +196,19 @@ export default function ProjectPage() {
           </>
         )}
 
-        <CreateFlagDialog
-          open={createFlagOpen}
-          onOpenChange={setCreateFlagOpen}
-          projectSlug={slug}
-        />
+        {isProductView ? (
+          <FlagCreationWizard
+            open={createFlagOpen}
+            onOpenChange={setCreateFlagOpen}
+            projectSlug={slug}
+          />
+        ) : (
+          <CreateFlagDialog
+            open={createFlagOpen}
+            onOpenChange={setCreateFlagOpen}
+            projectSlug={slug}
+          />
+        )}
 
         <Dialog
           open={createEnvOpen}
